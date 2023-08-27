@@ -249,9 +249,11 @@ export async function addCommentToThread(
 export async function toggleLikeThread({
   threadId,
   userId,
+  path
 }: {
   threadId: string;
   userId: string;
+  path: string;
 }) {
   try {
     connectToDB();
@@ -274,6 +276,7 @@ export async function toggleLikeThread({
       await thread.save();
       return { message: "Unliked", likes: thread.likes };
     }
+    revalidatePath(path);
   } catch (error: any) {
     throw new Error(`Failed to toggle like for thread: ${error.message}`);
   }

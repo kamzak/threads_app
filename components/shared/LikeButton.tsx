@@ -2,6 +2,7 @@
 
 import { toggleLikeThread } from "@/lib/actions/thread.actions";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
   userId: string;
@@ -10,10 +11,13 @@ interface Props {
 }
 
 const LikeButton = ({ userId, threadId, likedBy }: Props) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const isLiked = likedBy?.length > 0 ? likedBy.includes(userId) : false;
 
   const toggleLikeHandler = async () => {
-    await toggleLikeThread({ userId, threadId });
+    await toggleLikeThread({ userId, threadId, path: pathname });
   };
   return (
     <Image
