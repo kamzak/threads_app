@@ -122,7 +122,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                     width={96}
                     height={96}
                     priority
-                    className="rounded-full object-cover max-h-24"
+                    className="rounded-full object-cover h-24 w-24 max-w-24 max-h-24"
                   />
                 ) : (
                   <Image
@@ -131,7 +131,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                     width={24}
                     height={24}
                     priority
-                    className="object-contain"
+                    className="object-cover"
                   />
                 )}
               </FormLabel>

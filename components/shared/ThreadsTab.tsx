@@ -7,9 +7,18 @@ interface Props {
   currentUserId: string;
   accountId: string;
   accountType: string;
+  communityDetails?: {
+    image?: string;
+    name?: string;
+  };
 }
 
-const ThreadsTab = async ({ currentUserId, accountId, accountType }: Props) => {
+const ThreadsTab = async ({
+  currentUserId,
+  accountId,
+  accountType,
+  communityDetails,
+}: Props) => {
   let result: any;
 
   if (accountType === "Community") {
@@ -37,8 +46,8 @@ const ThreadsTab = async ({ currentUserId, accountId, accountType }: Props) => {
                   image: thread.author.image,
                   id: thread.author.id,
                 }
-          } // todo
-          community={thread.community} // todo
+          }
+          community={communityDetails ? communityDetails : thread.community}
           createdAt={thread.createdAt}
           comments={thread.children}
         />

@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { connectToDB } from "../mongoose";
+import mongoose from "mongoose";
 
 import User from "../models/user.model";
 import Thread from "../models/thread.model";
@@ -32,7 +33,7 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
       populate: {
         path: "author", // Populate the author field within children
         model: User,
-        select: "_id name parentId image", // Select only _id and username fields of the author
+        select: "_id name parentId image",
       },
     });
 
@@ -49,14 +50,18 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
 }
 
 interface Params {
-  text: string,
-  author: string,
-  communityId: string | null,
-  path: string,
+  text: string;
+  author: string;
+  communityId: string | null;
+  path: string;
 }
 
-export async function createThread({ text, author, communityId, path }: Params
-) {
+export async function createThread({
+  text,
+  author,
+  communityId,
+  path,
+}: Params) {
   try {
     connectToDB();
 
@@ -69,6 +74,8 @@ export async function createThread({ text, author, communityId, path }: Params
       text,
       author,
       community: communityIdObject, // Assign communityId if provided, or leave it null for personal account
+      likes: 0,
+      likedBy: [],
     });
 
     // Update User model
@@ -236,5 +243,38 @@ export async function addCommentToThread(
   } catch (err) {
     console.error("Error while adding comment:", err);
     throw new Error("Unable to add comment");
+  }
+}
+
+export async function toggleLikeThread({
+  threadId,
+  userId,
+}: {
+  threadId: string;
+  userId: string;
+}) {
+  try {
+    connectToDB();
+
+    const thread = await Thread.findById(threadId);
+
+    if (!thread) {
+      throw new Error("Thread not found");
+    }
+
+    if (thread.likedBy && !thread.likedBy.includes(userId)) {
+      thread.likes += 1;
+      thread.likedBy.push(userId);
+      await thread.save();
+      return { message: "Liked", likes: thread.likes };
+    } else {
+      thread.likes -= 1;
+      const index = thread.likedBy.indexOf(userId);
+      thread.likedBy.splice(index, 1);
+      await thread.save();
+      return { message: "Unliked", likes: thread.likes };
+    }
+  } catch (error: any) {
+    throw new Error(`Failed to toggle like for thread: ${error.message}`);
   }
 }

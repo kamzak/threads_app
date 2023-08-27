@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { Button } from "../ui/button";
@@ -10,9 +10,16 @@ interface Props {
   username: string;
   imgUrl: string;
   personType: string;
+  suggested?: boolean;
 }
 
-const UserCard = ({ id, name, username, imgUrl, personType }: Props) => {
+const UserCard = ({
+  id,
+  name,
+  username,
+  imgUrl,
+  personType,
+}: Props) => {
   const router = useRouter();
 
   return (
@@ -23,7 +30,7 @@ const UserCard = ({ id, name, username, imgUrl, personType }: Props) => {
           alt="Logo"
           width={48}
           height={48}
-          className="rounded-full h-[48px] object-contain"
+          className="rounded-full h-[48px] w-[48px] object-cover"
         />
 
         <div className="flex-1 text-ellipsis">
@@ -34,7 +41,7 @@ const UserCard = ({ id, name, username, imgUrl, personType }: Props) => {
 
       <Button
         className="user-card_btn"
-        onClick={() => router.push(`/profile/${id}`)}
+        onClick={() => router.push(personType === 'User' ? `/profile/${id}` : `/communities/${id}`)}
       >
         View
       </Button>
