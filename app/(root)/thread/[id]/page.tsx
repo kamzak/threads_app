@@ -24,12 +24,15 @@ const Page = async ({ params }: { params: { id: string } }) => {
           key={thread._id}
           id={thread._id}
           currentUserId={user?.id || ""}
+          currentUserInfoId={userInfo?._id || ""}
           parentId={thread.parentId}
           content={thread.text}
           author={thread.author}
           community={thread.community}
           createdAt={thread.createdAt}
           comments={thread.children}
+          likes={thread.likes}
+          likedBy={thread.likedBy}
         />
       </div>
 
