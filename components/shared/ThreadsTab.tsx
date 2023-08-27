@@ -5,6 +5,7 @@ import { fetchCommunityPosts } from "@/lib/actions/community.actions";
 
 interface Props {
   currentUserId: string;
+  currentUserInfoId: string;
   accountId: string;
   accountType: string;
   communityDetails?: {
@@ -15,6 +16,7 @@ interface Props {
 
 const ThreadsTab = async ({
   currentUserId,
+  currentUserInfoId,
   accountId,
   accountType,
   communityDetails,
@@ -36,6 +38,7 @@ const ThreadsTab = async ({
           key={thread._id}
           id={thread._id}
           currentUserId={currentUserId}
+          currentUserInfoId={currentUserInfoId}
           parentId={thread.parentId}
           content={thread.text}
           author={
@@ -50,6 +53,8 @@ const ThreadsTab = async ({
           community={communityDetails ? communityDetails : thread.community}
           createdAt={thread.createdAt}
           comments={thread.children}
+          likes={thread.likes}
+          likedBy={thread.likedBy}
         />
       ))}
     </section>

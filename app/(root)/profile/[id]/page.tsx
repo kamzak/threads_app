@@ -56,6 +56,7 @@ async function Page({ params }: { params: { id: string } }) {
             >
               <ThreadsTab
                 currentUserId={user.id}
+                currentUserInfoId={userInfo?._id || ""}
                 accountId={userInfo.id}
                 accountType="User"
               />

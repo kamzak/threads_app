@@ -50,12 +50,15 @@ const Page = async ({ params }: { params: { id: string } }) => {
             key={childItem._id}
             id={childItem._id}
             currentUserId={user?.id || ""}
+            currentUserInfoId={userInfo?._id || ""}
             parentId={childItem.parentId}
             content={childItem.text}
             author={childItem.author}
             community={childItem.community}
             createdAt={childItem.createdAt}
             comments={childItem.children}
+            likes={thread.likes}
+            likedBy={thread.likedBy}
             isComment
           />
         ))}
