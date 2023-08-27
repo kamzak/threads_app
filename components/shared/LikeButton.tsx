@@ -19,6 +19,7 @@ const LikeButton = ({ userId, threadId, likedBy }: Props) => {
   const toggleLikeHandler = async () => {
     await toggleLikeThread({ userId, threadId, path: pathname });
   };
+  
   return (
     <Image
       src={isLiked ? "/assets/heart-filled.svg" : "/assets/heart-gray.svg"}

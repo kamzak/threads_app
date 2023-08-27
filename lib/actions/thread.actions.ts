@@ -3,7 +3,6 @@
 import { revalidatePath } from "next/cache";
 
 import { connectToDB } from "../mongoose";
-import mongoose from "mongoose";
 
 import User from "../models/user.model";
 import Thread from "../models/thread.model";
@@ -165,9 +164,8 @@ export async function deleteThread(id: string, path: string): Promise<void> {
 }
 
 export async function fetchThreadById(threadId: string) {
-  connectToDB();
-
   try {
+    connectToDB();
     const thread = await Thread.findById(threadId)
       .populate({
         path: "author",
@@ -213,9 +211,8 @@ export async function addCommentToThread(
   userId: string,
   path: string
 ) {
-  connectToDB();
-
   try {
+    connectToDB();
     // Find the original thread by its ID
     const originalThread = await Thread.findById(threadId);
 
@@ -249,7 +246,7 @@ export async function addCommentToThread(
 export async function toggleLikeThread({
   threadId,
   userId,
-  path
+  path,
 }: {
   threadId: string;
   userId: string;
@@ -268,15 +265,17 @@ export async function toggleLikeThread({
       thread.likes += 1;
       thread.likedBy.push(userId);
       await thread.save();
+      revalidatePath(path);
       return { message: "Liked", likes: thread.likes };
     } else {
       thread.likes -= 1;
       const index = thread.likedBy.indexOf(userId);
       thread.likedBy.splice(index, 1);
       await thread.save();
+      revalidatePath(path);
       return { message: "Unliked", likes: thread.likes };
     }
-    revalidatePath(path);
+
   } catch (error: any) {
     throw new Error(`Failed to toggle like for thread: ${error.message}`);
   }

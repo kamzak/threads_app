@@ -6,6 +6,8 @@ import ThreadsTab from "@/components/shared/ThreadsTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchCommunityDetails } from "@/lib/actions/community.actions";
 import UserCard from "@/components/cards/UserCard";
+import { fetchUser } from "@/lib/actions/user.actions";
+import { redirect } from "next/navigation";
 
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
@@ -15,6 +17,7 @@ async function Page({ params }: { params: { id: string } }) {
 
   // @ts-ignore
   const userInfo = await fetchUser(user.id);
+  if (!userInfo?.onboarded) redirect("/onboarding");
 
   return (
     <section>

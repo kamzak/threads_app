@@ -12,7 +12,6 @@ const Page = async ({ params }: { params: { id: string } }) => {
   if (!user) return null;
 
   const userInfo = await fetchUser(user.id);
-
   if (!userInfo?.onboarded) redirect("/onboarding");
 
   const thread = await fetchThreadById(params.id);
@@ -57,8 +56,8 @@ const Page = async ({ params }: { params: { id: string } }) => {
             community={childItem.community}
             createdAt={childItem.createdAt}
             comments={childItem.children}
-            likes={thread.likes}
-            likedBy={thread.likedBy}
+            likes={childItem.likes}
+            likedBy={childItem.likedBy}
             isComment
           />
         ))}
