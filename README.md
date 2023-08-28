@@ -1,4 +1,5 @@
 ## Threads App Clone - FullStack MERN | Next.js 13, Typescript, MongoDB
+![threadspng](https://github.com/kamzak/threads_app/assets/58105737/f3e469f2-c066-4b7a-bf2c-0f650787c1bb)
 
 Introducing Threads-inspired app, powered by the MERN stack.
 
