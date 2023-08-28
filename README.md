@@ -9,5 +9,8 @@ Introducing Threads-inspired app, powered by the MERN stack.
       🔍 Use the Search page to discover users and dive into Communities to explore various groups.
       🌐 Found a community or make it your own! Post, invite others via email invitations, and grow your circle.
       💡 Developed using React, Next.js, TypeScript, and MongoDB.
-      
+
+## Live
+https://threads-app-kamzak.vercel.app/
+
 #NextGenWeb
