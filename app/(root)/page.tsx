@@ -7,11 +7,10 @@ import { redirect } from "next/navigation";
 export default async function Home() {
   const result = await fetchPosts(1, 30);
   const user = await currentUser();
-  if (!user) redirect("/sign-in");
 
   // @ts-ignore
-  const userInfo = await fetchUser(user.id);
-  if (!userInfo?.onboarded) redirect("/onboarding");
+  const userInfo = await fetchUser(user?.id);
+  if (userInfo && !userInfo?.onboarded) redirect("/onboarding");
 
   return (
     <>

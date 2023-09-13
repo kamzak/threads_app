@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SignedIn, SignOutButton, OrganizationSwitcher } from "@clerk/nextjs";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignOutButton,
+  OrganizationSwitcher,
+} from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 
 function Topbar() {
@@ -12,6 +18,13 @@ function Topbar() {
       </Link>
 
       <div className="flex items-center gap-1">
+        <SignedOut>
+          <SignInButton>
+            <button className="text-light-1 border border-light-1 px-2 py-1 rounded-md hover:text-light-2">
+              Sign In
+            </button>
+          </SignInButton>
+        </SignedOut>
         <div className="block md:hidden">
           <SignedIn>
             <SignOutButton>

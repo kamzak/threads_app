@@ -5,7 +5,7 @@ import { fetchCommunities } from "@/lib/actions/community.actions";
 
 async function RightSidebar() {
   const user = await currentUser();
-  if (!user) return null;
+  // if (!user) return null;
 
   // Fetch communities
   const suggestedCommunities = await fetchCommunities({
@@ -16,7 +16,7 @@ async function RightSidebar() {
 
   // Fetch users
   const suggestedUsers = await fetchUsers({
-    userId: user.id,
+    userId: user?.id || '',
     searchString: "",
     pageNumber: 1,
     pageSize: 4,
