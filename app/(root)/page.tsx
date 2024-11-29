@@ -12,6 +12,7 @@ export default async function Home() {
   const userInfo = await fetchUser(user?.id);
   if (userInfo && !userInfo?.onboarded) redirect("/onboarding");
 
+
   return (
     <>
       <h1 className="head-text text-left">Home</h1>
